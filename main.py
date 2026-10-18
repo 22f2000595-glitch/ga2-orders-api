@@ -56,7 +56,10 @@ def check_rate_limit(request: Request):
             return JSONResponse(
                 status_code=429,
                 content={"detail": "Rate limit exceeded"},
-                headers={"Retry-After": str(retry_after)},
+                headers={
+                    "Retry-After": str(retry_after),
+                    "Access-Control-Expose-Headers": "Retry-After",
+                },
             )
 
         bucket.append(now)
